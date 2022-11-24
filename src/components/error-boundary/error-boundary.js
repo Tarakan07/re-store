@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ErrorIndicator from "../error-indicator";
 export default class ErrorBoundary extends Component {
 	state = {
-		hasError: true,
+		hasError: false,
 	};
 	componentDidCatch() {
 		this.setState({
@@ -11,7 +11,7 @@ export default class ErrorBoundary extends Component {
 	}
 
 	render() {
- 		if (this.state.hasError) {
+		if (this.state.hasError) {
 			return <ErrorIndicator />;
 		}
 		return this.props.children;

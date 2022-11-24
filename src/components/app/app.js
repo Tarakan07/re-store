@@ -1,9 +1,8 @@
 import React from "react";
-import Spinner from "../spinner";
-import ErrorBoundary from "../error-boundary/error-boundary";
-
-const App = () => {
-	<div>Hello,Borik</div>;
+import WithBookstoreService from "../hoc";
+const App = ({ bookstoreService }) => {
+	console.log(bookstoreService.getBooks());
+	return <div>Hello,Borik</div>;
 };
 
-export default App;
+export default WithBookstoreService()(App);
