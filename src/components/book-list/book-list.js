@@ -1,11 +1,12 @@
 import { render } from "@testing-library/react";
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import BookLisItem from "../book-list-item";
 import BookstoreService from "../../services";
 import WithBookstoreService from "../hoc";
 import { booksLoaded } from "../../actions";
-import { bindActionCreators } from "redux";
+import compose from "../../utils";
 class BookList extends Component {
 	componentDidMount() {
 		const { bookstoreService } = this.props;
@@ -60,6 +61,10 @@ const mapDispatchToProps_1 = (dispatch) => {
 	};
 };
 
-export default WithBookstoreService()(
-	connect(mapStateToProps, mapDispatchToProps)(BookList)
-);
+export default compose(
+	WithBookstoreService(),
+	connect(mapStateToProps, mapDispatchToProps)
+)(BookList);
+// export default WithBookstoreService()(
+// 	connect(mapStateToProps, mapDispatchToProps)(BookList)
+// );
