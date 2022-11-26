@@ -1,10 +1,25 @@
 const initialState = {
-	books: [],
+	books: [
+		{
+			id: 1,
+			title: "Book number 12",
+			author: "Chel kakoi-to",
+		},
+		{
+			id: 2,
+			title: "Book kamasutra",
+			author: "Chel kakoi-to izvrashenec",
+		},
+	],
 };
-const reducer = (state, action) => {
+const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case "BOOKS_LOADED":
-			return action.payload;
+			return {
+				books: action.payload,
+			};
+		default:
+			return state;
 	}
 };
 

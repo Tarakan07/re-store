@@ -1,10 +1,11 @@
 import { render } from "@testing-library/react";
 import React, { Component } from "react";
-
+import { connect } from "react-redux";
 import BookLisItem from "../book-list-item";
-export default class BookList extends Component {
+class BookList extends Component {
 	render() {
 		const { books } = this.props;
+
 		return (
 			<ul>
 				{books.map((book, ind) => {
@@ -18,3 +19,11 @@ export default class BookList extends Component {
 		);
 	}
 }
+
+const mapStateToProps = (state) => {
+	return {
+		books: state.books,
+	};
+};
+
+export default connect(mapStateToProps)(BookList);
