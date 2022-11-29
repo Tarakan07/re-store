@@ -1,9 +1,5 @@
-const compose =
-	(...func) =>
-	(comp) => {
-		return func.reduceRight((prevResult, f) => {
-			return f(prevResult);
-		}, comp);
-	};
+import compose from './compose';
 
-export default compose;
+export {
+  compose
+};

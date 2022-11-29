@@ -1,15 +1,27 @@
-import React from "react";
-import { Switch } from "react-router-dom";
-import { Route } from "react-router-dom";
+import React from 'react';
+import { Route, Switch } from 'react-router-dom';
+import ShopHeader from '../shop-header';
+import { HomePage, CartPage } from '../pages';
 
-import WithBookstoreService from "../hoc";
-import { HomePage, CartPage } from "../pages";
+import './app.css';
+
 const App = () => {
-	return (
-		<Switch>
-			<Route path="/" exact component={HomePage} />
-		</Switch>
-	);
+  return (
+    <main role="main" className="container">
+      <ShopHeader numItems={5} total={210}/>
+      <Switch>
+        <Route
+          path="/"
+          component={HomePage}
+          exact />
+
+        <Route
+          path="/cart"
+          component={CartPage}
+          />
+      </Switch>
+    </main>
+  );
 };
 
-export default WithBookstoreService()(App);
+export default App;

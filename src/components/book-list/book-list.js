@@ -1,70 +1,49 @@
-import { render } from "@testing-library/react";
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import BookLisItem from "../book-list-item";
-import BookstoreService from "../../services";
-import WithBookstoreService from "../hoc";
-import { booksLoaded } from "../../actions";
-import compose from "../../utils";
+import React, { Component } from 'react';
+import BookListItem from '../book-list-item';
+import { connect } from 'react-redux';
+
+import { withBookstoreService } from '../hoc';
+import { booksLoaded } from '../../actions';
+import { compose } from '../../utils';
+
+import './book-list.css';
+
 class BookList extends Component {
-	componentDidMount() {
-		const { bookstoreService } = this.props;
-		const data = bookstoreService.getBooks();
-		this.props.booksLoaded(data);
-	}
-	render() {
-		const { books } = this.props;
-		return (
-			<ul>
-				{books.map((book, ind) => {
-					return (
-						<li key={ind}>
-							<BookLisItem book={book} />
-						</li>
-					);
-				})}
-			</ul>
-		);
-	}
+
+  componentDidMount() {
+    // 1. receive data
+    const { bookstoreService } = this.props;
+    const data = bookstoreService.getBooks();
+
+    // 2. dispacth action to store
+    this.props.booksLoaded(data);
+  }
+
+  render() {
+    const { books } = this.props;
+    return (
+      <ul className="book-list">
+        {
+          books.map((book) => {
+            return (
+              <li key={book.id}><BookListItem book={book}/></li>
+            )
+          })
+        }
+      </ul>
+    );
+  }
 }
 
 const mapStateToProps = ({ books }) => {
-	return {
-		books,
-	};
-};
-// 4 cпособ
-const mapDispatchToProps = { booksLoaded };
-// 3 cпособ
-const mapDispatchToProps_3 = (dispatch) => {
-	return bindActionCreators(booksLoaded)(dispatch);
-};
-// 2 cпособ
-const mapDispatchToProps_2 = (dispatch) => {
-	return {
-		booksLoaded: (newBooks) => {
-			dispatch(booksLoaded(newBooks));
-		},
-	};
+  return { books };
 };
 
-// 1 cпособ
-const mapDispatchToProps_1 = (dispatch) => {
-	return {
-		booksLoaded: (newBooks) => {
-			dispatch({
-				type: "BOOKS_LOADED",
-				payload: newBooks,
-			});
-		},
-	};
+const mapDispatchToProps = {
+  booksLoaded
 };
 
 export default compose(
-	WithBookstoreService(),
-	connect(mapStateToProps, mapDispatchToProps)
+  withBookstoreService(),
+  connect(mapStateToProps, mapDispatchToProps)
 )(BookList);
-// export default WithBookstoreService()(
-// 	connect(mapStateToProps, mapDispatchToProps)(BookList)
-// );

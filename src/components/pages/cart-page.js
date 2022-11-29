@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from 'react';
 
-const CartPage = ({ history, match }) => {
-	return <div>Cart page</div>;
+const CartPage = () => {
+  return <div>Cart Page</div>
 };
 
 export default CartPage;
