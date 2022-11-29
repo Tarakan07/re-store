@@ -20,8 +20,8 @@ export default class BookstoreService {
 	getBooks() {
 		return new Promise((resolve, reject) => {
 			return setTimeout(() => {
-				// resolve(this.data);
-				reject(new Error("пиздец коду"));
+				resolve(this.data);
+				// reject(new Error("пиздец коду"));
 			}, 700);
 		});
 	}
