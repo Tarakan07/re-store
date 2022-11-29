@@ -1,18 +1,29 @@
+const booksRequested = () => {
+	return {
+		type: "FETCH_BOOKS_REQUEST",
+	};
+};
 const booksLoaded = (newBooks) => {
 	return {
-		type: "BOOKS_LOADED",
+		type: "FETCH_BOOKS_SUCCESS",
 		payload: newBooks,
 	};
 };
-const booksRequested = () => {
-	return {
-		type: "BOOKS_REQUESTED",
-	};
-};
+
 const booksError = (error) => {
 	return {
-		type: "BOOKS_ERROR",
+		type: "FETCH_BOOKS_FAILURE",
 		payload: error,
 	};
 };
-export { booksLoaded, booksRequested, booksError };
+
+//создаем двойную функцию тк компонент вызывает вторую функция, и чтобы компонент не зависел от передаваемых параметров.
+//А так, можно было бы в компноненте написать fetchBooks:()=>fetchBooks()
+const fetchBooks = (dispatch, bookstoreService) => () => {
+	dispatch(booksRequested());
+	bookstoreService
+		.getBooks()
+		.then((data) => dispatch(booksLoaded(data)))
+		.catch((error) => dispatch(booksError(error)));
+};
+export { fetchBooks };
