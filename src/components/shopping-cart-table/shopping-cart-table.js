@@ -13,7 +13,7 @@ const ShoppingCartTable = ({
 		const { id, name, count, total } = item;
 		return (
 			<tr key={id}>
-				<td>{idx}</td>
+				<td>{idx + 1}</td>
 				<td>{name}</td>
 				<td>{count}</td>
 				<td>{total}</td>

@@ -17,6 +17,12 @@ const booksError = (error) => {
 	};
 };
 
+const bookAddedToCart = (id) => {
+	return {
+		type: "BOOK_ADDED_TO_CART",
+		payload: id,
+	};
+};
 //создаем двойную функцию тк компонент вызывает вторую функция, и чтобы компонент не зависел от передаваемых параметров.
 //А так, можно было бы в компноненте написать fetchBooks:()=>fetchBooks()
 const fetchBooks = (dispatch, bookstoreService) => () => {
@@ -26,4 +32,4 @@ const fetchBooks = (dispatch, bookstoreService) => () => {
 		.then((data) => dispatch(booksLoaded(data)))
 		.catch((error) => dispatch(booksError(error)));
 };
-export { fetchBooks };
+export { fetchBooks, bookAddedToCart };
