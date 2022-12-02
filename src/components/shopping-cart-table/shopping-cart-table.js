@@ -1,7 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
 import "./shopping-cart-table.css";
-
+import {
+	bookAddedToCart,
+	bookRemovedFromCart,
+	allBooksRemovedFromCart,
+} from "../../actions";
 const ShoppingCartTable = ({
 	items,
 	total,
@@ -10,16 +14,16 @@ const ShoppingCartTable = ({
 	onDelete,
 }) => {
 	const renderRow = (item, idx) => {
-		const { id, name, count, total } = item;
+		const { id, title, count, total } = item;
 		return (
 			<tr key={id}>
 				<td>{idx + 1}</td>
-				<td>{name}</td>
+				<td>{title}</td>
 				<td>{count}</td>
 				<td>{total}</td>
 				<td>
 					<button
-						onClick={() => onDecrease("onDecrease")}
+						onClick={() => onDecrease(id)}
 						className="btn btn-outline-danger btn-sm float-right"
 					>
 						<svg
@@ -35,7 +39,7 @@ const ShoppingCartTable = ({
 						</svg>
 					</button>
 					<button
-						onClick={() => onIcrease("onIcrease")}
+						onClick={() => onIcrease(id)}
 						className="btn btn-outline-success btn-sm float-right"
 					>
 						<svg
@@ -51,7 +55,7 @@ const ShoppingCartTable = ({
 						</svg>
 					</button>
 					<button
-						onClick={() => onDelete("onDelete")}
+						onClick={() => onDelete(id)}
 						className="btn btn-outline-warning btn-sm float-right"
 					>
 						<svg
@@ -97,17 +101,10 @@ const mapStateToProps = ({ cartItems, orderTotal }) => {
 		total: orderTotal,
 	};
 };
-const mapDispatchToProps = (dispatch) => {
-	return {
-		onIcrease: (id) => {
-			console.log(id);
-		},
-		onDecrease: (id) => {
-			console.log(id);
-		},
-		onDelete: (id) => {
-			console.log(id);
-		},
-	};
+const mapDispatchToProps = {
+	onIcrease: bookAddedToCart,
+	onDecrease: bookRemovedFromCart,
+	onDelete: allBooksRemovedFromCart,
 };
+
 export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCartTable);
