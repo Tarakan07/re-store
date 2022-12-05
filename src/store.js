@@ -1,11 +1,13 @@
 import { createStore, compose, applyMiddleware } from "redux";
+import thunkMiddleware from "redux-thunk";
 
 import reducer from "./reducers";
 
-const logMiddleware = (store) => (dispatch) => (action) => {
+const logMeddleware = (store) => (dispatch) => (action) => {
 	console.log(action, store);
 	return dispatch(action);
 };
+
 const stringMeddleware = () => (dispatch) => (action) => {
 	if (typeof action === "string") {
 		return dispatch({
@@ -14,38 +16,19 @@ const stringMeddleware = () => (dispatch) => (action) => {
 	}
 	return dispatch(action);
 };
-// const stringEnhancer =
-// 	(createStore) =>
-// 	(...args) => {
-// 		console.log(...args);
-// 		const store = createStore(...args);
-// 		const originalDispatch = store.dispatch;
-// 		store.dispatch = (action) => {
-// 			if (typeof action === "string") {
-// 				return originalDispatch({
-// 					type: action,
-// 				});
-// 			}
-// 			return originalDispatch(action);
-// 		};
-// 		return store;
-// 	};
-// const logEnhancer =
-// 	(createStore) =>
-// 	(...args) => {
-// 		console.log(...args);
-// 		const store = createStore(...args);
-// 		const originalDispatch = store.dispatch;
-// 		store.dispatch = (action) => {
-// 			console.log(action);
-// 			return originalDispatch(action);
-// 		};
-// 		return store;
-// 	};
+
 const store = createStore(
 	reducer,
-	applyMiddleware(stringMeddleware, logMiddleware)
+	applyMiddleware(thunkMiddleware, stringMeddleware, logMeddleware)
 );
+// const myAction = (dispatch) => {
+// 	setTimeout(() => {
+// 		return dispatch({
+// 			type: "delay",
+// 		});
+// 	}, 3000);
+// };
 
-store.dispatch({ type: "hello world" });
+// store.dispatch(myAction);
+
 export default store;

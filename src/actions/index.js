@@ -37,7 +37,15 @@ const allBooksRemovedFromCart = (bookId) => {
 };
 //создаем двойную функцию тк компонент вызывает вторую функция, и чтобы компонент не зависел от передаваемых параметров.
 //А так, можно было бы в компноненте написать fetchBooks:()=>fetchBooks()
-const fetchBooks = (dispatch, bookstoreService) => () => {
+const fetchBooksOld = (dispatch, bookstoreService) => () => {
+	dispatch(booksRequested());
+	bookstoreService
+		.getBooks()
+		.then((data) => dispatch(booksLoaded(data)))
+		.catch((error) => dispatch(booksError(error)));
+};
+
+const fetchBooks = (bookstoreService) => () => (dispatch) => {
 	dispatch(booksRequested());
 	bookstoreService
 		.getBooks()
